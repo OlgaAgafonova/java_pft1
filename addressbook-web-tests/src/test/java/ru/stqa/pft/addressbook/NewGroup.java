@@ -18,33 +18,58 @@ public class NewGroup {
         wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");
+        login("admin", "secret");
+    }
+
+    private void login(String username, String password) {
         wd.findElement(By.name("user")).click();
         wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
+        wd.findElement(By.name("user")).sendKeys(username);
         wd.findElement(By.name("pass")).click();
         wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
+        wd.findElement(By.name("pass")).sendKeys(password);
         wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
     }
-    
+
     @Test
     public void testNewGroup() {
+//методы
+        gotoGroup();
+        initGroup();
+        formGroup(new GroupData("group2", "22", "33"));
+        saveGroup();
+        returnGroup();
+    }
 
-        wd.findElement(By.linkText("groups")).click();
-        wd.findElement(By.name("new")).click();
-        wd.findElement(By.name("group_name")).click();
-        wd.findElement(By.name("group_name")).clear();
-        wd.findElement(By.name("group_name")).sendKeys("group2");
-        wd.findElement(By.name("group_header")).click();
-        wd.findElement(By.name("group_header")).clear();
-        wd.findElement(By.name("group_header")).sendKeys("22");
-        wd.findElement(By.name("group_footer")).click();
-        wd.findElement(By.name("group_footer")).clear();
-        wd.findElement(By.name("group_footer")).sendKeys("33");
-        wd.findElement(By.name("submit")).click();
+    private void returnGroup() {
         wd.findElement(By.linkText("group page")).click();
     }
-    
+
+    private void saveGroup() {
+        wd.findElement(By.name("submit")).click();
+    }
+//параметр groupData объединяет в себе все атрибуты, котрые надо заполнять, чтобы их не перечислять все они вынесены в отдельный класс
+    private void formGroup(GroupData groupData) {
+        wd.findElement(By.name("group_name")).click();
+        wd.findElement(By.name("group_name")).clear();
+        wd.findElement(By.name("group_name")).sendKeys(groupData.getGroup_name());
+        wd.findElement(By.name("group_header")).click();
+        wd.findElement(By.name("group_header")).clear();
+        wd.findElement(By.name("group_header")).sendKeys(groupData.getGroup_header());
+        wd.findElement(By.name("group_footer")).click();
+        wd.findElement(By.name("group_footer")).clear();
+        wd.findElement(By.name("group_footer")).sendKeys(groupData.getGroup_footer());
+
+    }
+
+    private void initGroup() {
+        wd.findElement(By.name("new")).click();
+    }
+
+    private void gotoGroup() {
+        wd.findElement(By.linkText("groups")).click();
+    }
+
     @AfterMethod
     public void tearDown() {
         wd.quit();
