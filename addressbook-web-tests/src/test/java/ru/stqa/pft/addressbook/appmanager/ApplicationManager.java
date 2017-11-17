@@ -1,27 +1,35 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
+//import sun.plugin2.util.BrowserType;
 
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-  FirefoxDriver wd;
+  WebDriver wd;
 
+  private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
   private ContactHelper contactHelper;
-  public SessionHelper sessionHelper;
+  private String browser;
 
-  public ApplicationManager(SessionHelper sessionHelper) {
+  public ApplicationManager(String browser ) {
+    this.browser=browser;
   }
 
-  public ApplicationManager() {
-
-  }
+ /* public ApplicationManager(SessionHelper sessionHelper) {  }  public ApplicationManager() { }*/
 
   public void init() {
-    wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+    if (browser== BrowserType.FIREFOX) {  wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));}
+    else if (browser== BrowserType.CHROME) {wd = new ChromeDriver();}
+    else if (browser== BrowserType.IE) {wd = new InternetExplorerDriver();}
+
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost:8005/addressbook/");
     groupHelper = new GroupHelper(wd);
@@ -31,8 +39,7 @@ public class ApplicationManager {
     sessionHelper.login("admin", "secret");
   }
 
-  public void stop() {
-    sessionHelper.wd.quit();
+  public void stop() {wd.quit();
   }
 
   public GroupHelper getGroupHelper() {
