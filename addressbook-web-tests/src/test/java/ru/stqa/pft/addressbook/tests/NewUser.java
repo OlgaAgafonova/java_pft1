@@ -9,10 +9,10 @@ public class NewUser extends TestBase2{
     //конструктор
     public void testNewUser() {
 //медоты
-        app.initUser();
-        app.formUser(new UserData("Ivan", "Oj", "Ivanov", "Ivushka", "lanit", "penza", "11", "20-30-40"));
-        app.saveUser();
-        app.returnUser();
+        app.getContactHelper().initUser();
+        app.getContactHelper().formUser(new UserData("Ivan", "Oj", "Ivanov", "Ivushka", "lanit", "penza", "11", "20-30-40"));
+        app.getContactHelper().saveUser();
+        app.getContactHelper().returnUser();
     }
 
 }

@@ -8,11 +8,14 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
   FirefoxDriver wd;
 
-  private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
+  private SessionHelper sessionHelper;
 
-   public void init() {
+  public ApplicationManager(SessionHelper sessionHelper) {
+  }
+
+  public void init() {
     wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost:8005/addressbook/");
