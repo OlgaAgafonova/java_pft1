@@ -3,7 +3,7 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.UserData;
 
-public class NewUser extends TestBase2{
+public class NewUser extends TestBase{
 
     @Test
     //конструктор

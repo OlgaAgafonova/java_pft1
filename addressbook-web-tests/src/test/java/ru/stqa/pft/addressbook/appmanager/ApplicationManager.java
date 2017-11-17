@@ -10,17 +10,23 @@ public class ApplicationManager {
 
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
-  private SessionHelper sessionHelper;
+  private ContactHelper contactHelper;
+  public SessionHelper sessionHelper;
 
   public ApplicationManager(SessionHelper sessionHelper) {
+  }
+
+  public ApplicationManager() {
+
   }
 
   public void init() {
     wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost:8005/addressbook/");
-    groupHelper = new GroupHelper(sessionHelper.wd);
-    navigationHelper = new NavigationHelper(sessionHelper.wd);
+    groupHelper = new GroupHelper(wd);
+    contactHelper = new ContactHelper(wd);
+    navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
     sessionHelper.login("admin", "secret");
   }
@@ -39,5 +45,9 @@ public class ApplicationManager {
 
   public SessionHelper getSessionHelper() {
     return sessionHelper;
+  }
+
+  public ContactHelper getContactHelper() {
+    return contactHelper;
   }
 }
