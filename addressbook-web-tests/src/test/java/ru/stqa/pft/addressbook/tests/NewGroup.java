@@ -9,11 +9,11 @@ public class NewGroup extends TestBase {
     @Test
     public void testNewGroup() {
 //методы
-        app.gotoGroup();
-        app.initGroup();
-        app.formGroup(new GroupData("group2", "22", "33"));
-        app.saveGroup();
-        app.returnGroup();
+        app.getNavigationHelper().gotoGroup();
+        app.getGroupHelper().initGroup();
+        app.getGroupHelper().formGroup(new GroupData("group2", "22", "33"));
+        app.getGroupHelper().saveGroup();
+        app.getGroupHelper().returnGroup();
     }
 
 }

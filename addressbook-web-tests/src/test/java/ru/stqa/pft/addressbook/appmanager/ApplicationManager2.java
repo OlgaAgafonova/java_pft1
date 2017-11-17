@@ -21,7 +21,7 @@ public class ApplicationManager2 {
     }
 
     public void login(String username, String password) {
-        wd.get("http://localhost/addressbook/");
+        wd.get("http://localhost:8005/addressbook/");
         wd.findElement(By.name("user")).click();
         wd.findElement(By.name("user")).clear();
         wd.findElement(By.name("user")).sendKeys(username);
