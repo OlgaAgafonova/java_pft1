@@ -8,10 +8,11 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 //import sun.plugin2.util.BrowserType;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-  WebDriver wd;
+  private WebDriver wd;
 
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
@@ -24,13 +25,13 @@ public class ApplicationManager {
   }
 
  /* public ApplicationManager(SessionHelper sessionHelper) {  }  public ApplicationManager() { }*/
-
+//equals сравнивает содержимое объектов
   public void init() {
-    if (browser== BrowserType.FIREFOX) {  wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));}
-    else if (browser== BrowserType.CHROME) {wd = new ChromeDriver();}
-    else if (browser== BrowserType.IE) {wd = new InternetExplorerDriver();}
+    if (Objects.equals(browser, BrowserType.FIREFOX)) {  wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));}
+    else if (Objects.equals(browser, BrowserType.CHROME)) {wd = new ChromeDriver();}
+    else if (Objects.equals(browser, BrowserType.IE)) {wd = new InternetExplorerDriver();}
 
-    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     wd.get("http://localhost:8005/addressbook/");
     groupHelper = new GroupHelper(wd);
     contactHelper = new ContactHelper(wd);

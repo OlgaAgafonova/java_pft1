@@ -1,20 +1,22 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.UserData;
 
 public class ContactHelper extends HelperBase {
 
-  FirefoxDriver wd;
-
-  public ContactHelper(WebDriver wd) {
+   public ContactHelper(WebDriver wd) {
     super(wd);
   }
+  public void initUser() {
+    click(By.linkText("add new"));
+  }
 
-  public void formUser(UserData userData) {
-
+  public void formUser(UserData userData,boolean creation) {
     type(By.name("firstname"), userData.getFirstname());
     type(By.name("middlename"), userData.getMiddlename());
     type(By.name("lastname"), userData.getLastname());
@@ -23,6 +25,11 @@ public class ContactHelper extends HelperBase {
     type(By.name("address"), userData.getAddress());
     type(By.name("home"), userData.getHome());
     type(By.name("mobile"), userData.getMobile());
+
+    if (creation)//если открытра форма создания контакта, то должен отображаться список с группами
+    {new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getNew_group());}
+else {      Assert.assertFalse(isElementPresent(By.name("new_group"))); }// если редактирование контакта, то списка с группами быть не должно
+
   }
 
   public void saveUser() {
@@ -33,11 +40,6 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), "Ivan1");
     type(By.name("lastname"), "Ivanov1");
     type(By.name("nickname"), "case1");
-  }
-
-
-  public void initUser() {
-    click(By.linkText("add new"));
   }
 
   public void returnUser() {

@@ -10,7 +10,7 @@ public class NewUser extends TestBase{
     public void testNewUser() {
 //медоты
         app.getContactHelper().initUser();
-        app.getContactHelper().formUser(new UserData("Ivan", "Oj", "Ivanov", "Ivushka", "lanit", "penza", "11", "20-30-40"));
+        app.getContactHelper().formUser(new UserData("Ivan", "Oj", "Ivanov", "Ivushka", "lanit", "penza", "11", "20-30-40","group2"),true);
         app.getContactHelper().saveUser();
         app.getContactHelper().returnUser();
     }

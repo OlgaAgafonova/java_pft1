@@ -9,7 +9,7 @@ public class TestBase {
 //деллегирование
 
 //protected ApplicationManager app;
-public final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
   @BeforeMethod
   public void setUp() throws Exception {
