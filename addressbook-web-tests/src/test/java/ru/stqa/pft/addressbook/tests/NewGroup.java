@@ -11,9 +11,8 @@ public class NewGroup extends TestBase {
 //методы
         app.getNavigationHelper().gotoGroup();
         app.getGroupHelper().initGroup();
-        app.getGroupHelper().formGroup(new GroupData("group2", null, null));
+        app.getGroupHelper().formGroup(new GroupData("group1", null, null));
         app.getGroupHelper().saveGroup();
         app.getGroupHelper().returnGroup();
     }
-
 }

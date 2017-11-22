@@ -24,10 +24,9 @@ public class NavigationHelper extends HelperBase {
  // }
 
   public void gotoHome() {
-    if (isElementPresent(By.id("maintable"))) {
-      return;
-    }
+   if (isElementPresent(By.id("maintable"))) {
+  return;}
 
-    click(By.linkText("home"));
+    click(By.linkText("home"));}
   }
-}
+

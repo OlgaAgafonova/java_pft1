@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -9,26 +8,31 @@ import ru.stqa.pft.addressbook.model.UserData;
 
 public class ContactHelper extends HelperBase {
 
-   public ContactHelper(WebDriver wd) {
+  public ContactHelper(WebDriver wd) {
     super(wd);
   }
+
   public void initUser() {
     click(By.linkText("add new"));
   }
 
-  public void formUser(UserData userData,boolean creation) {
-    type(By.name("firstname"), userData.getFirstname());
-    type(By.name("middlename"), userData.getMiddlename());
-    type(By.name("lastname"), userData.getLastname());
-    type(By.name("nickname"), userData.getNickname());
-    type(By.name("company"), userData.getCompany());
-    type(By.name("address"), userData.getAddress());
-    type(By.name("home"), userData.getHome());
-    type(By.name("mobile"), userData.getMobile());
+ public void formUser(UserData userData,boolean creation) {
+   type(By.name("firstname"), userData.getFirstname());
+   type(By.name("middlename"), userData.getMiddlename());
+   type(By.name("lastname"), userData.getLastname());
+   type(By.name("nickname"), userData.getNickname());
+   type(By.name("company"), userData.getCompany());
+   type(By.name("address"), userData.getAddress());
+   type(By.name("home"), userData.getHome());
+   type(By.name("mobile"), userData.getMobile());
+//   type(By.name("new_group"), userData.getNew_group());
 
-    if (creation)//если открытра форма создания контакта, то должен отображаться список с группами
-    {new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getNew_group());}
-else {      Assert.assertFalse(isElementPresent(By.name("new_group"))); }// если редактирование контакта, то списка с группами быть не должно
+    if (creation)//если открыта форма создания контакта, то должен отображаться выпадающий список с группами
+    {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getNew_group());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }// если редактирование контакта, то списка с группами быть не должно
 
   }
 
@@ -36,14 +40,8 @@ else {      Assert.assertFalse(isElementPresent(By.name("new_group"))); }// ес
     click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  public void formUser() {
-    type(By.name("firstname"), "Ivan1");
-    type(By.name("lastname"), "Ivanov1");
-    type(By.name("nickname"), "case1");
-  }
-
   public void returnUser() {
-    click(By.linkText("home page"));
+    click(By.linkText("home"));
   }
 
   public void editUser() {
@@ -56,5 +54,16 @@ else {      Assert.assertFalse(isElementPresent(By.name("new_group"))); }// ес
 
   public void deleteUser() {
     click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+  }
+
+  public void creationUser(UserData user) {
+    initUser();
+    formUser(user,true);
+    saveUser();
+    returnUser();
+  }
+
+    public boolean isThereAUser() {
+    return isElementPresent(By.name("selected[]"));
   }
 }
